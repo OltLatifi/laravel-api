@@ -32,6 +32,9 @@ class ProductController extends Controller
             'price' => 'required',
         ]);
 
+        $product['user'] = auth()->user()->id;
+        // dd($product);
+
         return Product::create($product);
     }
 
