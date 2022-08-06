@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Exceptions\GeneralJsonException;
 
 class ProductController extends Controller
 {
@@ -45,7 +46,11 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($slug)
-    {
+    {   
+        $product = Product::where('slug', $slug)->first();
+        if($product == null){
+            throw new GeneralJsonException(message: 'Product not found', code:404);
+        }
         return Product::where('slug', $slug)->first();
     }
 
